@@ -15,6 +15,7 @@
 	<script src="./bracket-template-designer.js"></script>
 </head>
 <body>
+	<h1>Liquipedia <b>Bracket Template Designer</b></h1>
 	<div id="delete-element-dialog">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
 		Are you sure?</p>
@@ -77,12 +78,20 @@
 		</form>
 	</div>
 
-	<p>Use the blue dashed lines to resize elements.</p>
+	<div id="generated-wikitext-dialog">
+		<p>Here is the resulting wikitext:</p>
+		<form>
+			<textarea rows=15 id="generated-wikitext"></textarea>
+		</form>
+	</div>
+
 	<div class="bracket-options">
 		<input type="checkbox" id="bracket-resizable-bottom-borders" checked="checked"/>
 		<label for="bracket-resizable-bottom-borders">Show bottom borders of resizable elements</label>
+		<br/>
 		<input type="checkbox" id="bracket-cell-helper"/>
 		<label for="bracket-cell-helper">Show bracket cell helpers</label>
+		<br/>
 		<input type="button" id="convert-to-wikitext" value="Convert to wikitext"/>
 	</div>
 	<div class="bracket-toolbar">
@@ -99,164 +108,166 @@
 		<div class="bracket-toolbar-item bracket-toolbar-connector-flat" title="Flat connector">&nbsp;</div>
 	</div>
 
-	<div class="bracket" style="min-height:300px; min-width: 150px; width:490px; border: 1px solid silver;">
-		<table class="bracket-headers">
-			<tr class="bracket-section-header-row">
-				<th class="bracket-section-header">A</th>
-				<th class="bracket-section-header">B</th>
-			</tr>
-			<tr class="bracket-column-header-row">
-				<td style="width:320px;" class="bracket-column-header-section">
-					<div style="width:150px;" class="bracket-column-header bracket-game-column-header">1</div><!--
-					--><div style="width:20px;" class="bracket-column-header bracket-connector-column-header">2</div><!--
-					--><div style="width:150px;" class="bracket-column-header bracket-game-column-header bracket-column-header-break">3</div><!--
-					--><div style="width:150px;" class="bracket-column-header bracket-game-column-header">4</div><!--
-					--><div style="width:20px;" class="bracket-column-header bracket-connector-column-header">5</div><!--
-					--><div style="width:150px;" class="bracket-column-header bracket-game-column-header">6</div>
-				</td>
-				<td style="width:170px;" class="bracket-column-header-section">
-					<div style="width:20px;" class="bracket-column-header bracket-connector-column-header">1</div><!--
-					--><div style="width:150px;" class="bracket-column-header bracket-game-column-header">2</div>
-				</td>
-			</tr>
-		</table>
-		<div style="width:320px;" class="bracket-section">
-			<div style="width: 150px;" class="bracket-column bracket-game-column">
-				<div class="bracket-header-container" style="height:40px;margin-top:0px"><div class="bracket-header" id="R1"><input type="text" value="Semifinals"/></div></div>
-				<div class="bracket-element bracket-game ui-widget-content">
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+	<div class="bracket-container">
+		<div class="bracket" style="min-height:300px; min-width: 150px; width:490px;">
+			<table class="bracket-headers">
+				<tr class="bracket-section-header-row">
+					<th class="bracket-section-header">A</th>
+					<th class="bracket-section-header">B</th>
+				</tr>
+				<tr class="bracket-column-header-row">
+					<td style="width:320px;" class="bracket-column-header-section">
+						<div style="width:150px;" class="bracket-column-header bracket-game-column-header">1</div><!--
+						--><div style="width:20px;" class="bracket-column-header bracket-connector-column-header">2</div><!--
+						--><div style="width:150px;" class="bracket-column-header bracket-game-column-header bracket-column-header-break">3</div><!--
+						--><div style="width:150px;" class="bracket-column-header bracket-game-column-header">4</div><!--
+						--><div style="width:20px;" class="bracket-column-header bracket-connector-column-header">5</div><!--
+						--><div style="width:150px;" class="bracket-column-header bracket-game-column-header">6</div>
+					</td>
+					<td style="width:170px;" class="bracket-column-header-section">
+						<div style="width:20px;" class="bracket-column-header bracket-connector-column-header">1</div><!--
+						--><div style="width:150px;" class="bracket-column-header bracket-game-column-header">2</div>
+					</td>
+				</tr>
+			</table>
+			<div style="width:320px;" class="bracket-section">
+				<div style="width: 150px;" class="bracket-column bracket-game-column">
+					<div class="bracket-header-container" style="height:40px;margin-top:0px"><div class="bracket-header" id="R1"><input type="text" value="Semifinals"/></div></div>
+					<div class="bracket-element bracket-game ui-widget-content">
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
 					</div>
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+					<div class="bracket-element bracket-game ui-widget-content">
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
 					</div>
 				</div>
-				<div class="bracket-element bracket-game ui-widget-content">
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+				<div class="bracket-column bracket-connector-column" style="width: 20px;">
+					<div style="height: 75px;" class="bracket-placeholder"></div>
+					<div style="height: 26px;" class="bracket-connector bracket-connector-down">
+						<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px">
+							<div style="width:9px;height:16px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>
+							<div style="width:9px;height:8px"> </div>
+						</div>
+						<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
+							<div style="width:9px;height:18px;"> </div>
+							<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
+						</div>
 					</div>
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+					<div style="height: 22px;" class="bracket-placeholder"></div>
+					<div style="height: 26px;" class="bracket-connector bracket-connector-up">
+						<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;">
+							<div style="width:9px;height:8px"> </div>
+							<div style="width:9px;height:16px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>
+						</div>
+						<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
+							<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>
+							<div style="width:9px;height:18px;"> </div>
+						</div>
 					</div>
+					<div style="height:35px;" class="bracket-placeholder"></div>
+				</div>
+				<div style="width: 150px;" class="bracket-column bracket-game-column bracket-column-break">
+					<div class="bracket-header-container" style="height:40px;margin-top:0px"><div class="bracket-header" id="R2"><input type="text" value="Finals"/></div></div>
+					<div class="bracket-element bracket-game ui-widget-content">
+						<div class="bracket-cell bracket-cell-r2">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r2">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+					</div>
+				</div>
+				<div style="width: 150px;" class="bracket-column bracket-game-column">
+					<div class="bracket-header-container" style="height:64px;margin-top:16px"><div class="bracket-header" id="L1"><input type="text" value="Loser's Round 1"/></div></div>
+					<div class="bracket-element bracket-game ui-widget-content">
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+					</div>
+				</div>
+				<div style="width:20px;" class="bracket-column bracket-connector-column">
+					<div style="height: 80px;" class="bracket-placeholder"></div>
+					<div style="height: 14px;" class="bracket-connector bracket-connector-drop">
+						<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;height:100%;"> </div>
+						<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;height:12px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
+					</div>
+					<div style="height: 21px;" class="bracket-placeholder"></div>
+					<div style="height: 0px;border-bottom:solid #aaa 2px;" class="bracket-connector bracket-connector-flat"> </div>
+					<div style="height: 35px;" class="bracket-placeholder"></div>
+				</div>
+				<div style="width: 150px;" class="bracket-column bracket-game-column">
+					<div class="bracket-header-container" style="height:52px;margin-top:16px"><div class="bracket-header" id="L2"><input type="text" value="Loser's Finals"/></div></div>
+					<div class="bracket-element bracket-game ui-widget-content">
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+					</div>
+				</div>
+			</div><!--
+			--><div style="width:170px;" class="bracket-section">
+				<div style="width: 20px;" class="bracket-column bracket-connector-column">
+					<div style="height: 111px;" class="bracket-placeholder"></div>
+					<div style="height: 78px;" class="bracket-connector bracket-connector-down">
+						<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px">
+							<div style="width:9px;height:68px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>
+							<div style="width:9px;height:8px"> </div>
+						</div>
+						<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
+							<div style="width:9px;height:70px;"> </div>
+							<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
+						</div>
+					</div>
+					<div style="height: 22px;" class="bracket-placeholder"></div>
+					<div style="height: 78px;" class="bracket-connector bracket-connector-up">
+						<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;">
+							<div style="width:9px;height:8px"> </div>
+							<div style="width:9px;height:68px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>
+						</div>
+						<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
+							<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>
+							<div style="width:9px;height:70px;"> </div>
+						</div>
+					</div>
+					<div style="height:35px;" class="bracket-placeholder"></div>
+				</div>
+				<div style="width: 150px;" class="bracket-column bracket-game-column">
+					<div class="bracket-header-container" style="height:164px;margin-top:0px"><div class="bracket-header" id="R3"><input type="text" value="Grand Finals"/></div></div>
+					<div class="bracket-element bracket-game ui-widget-content">
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+					</div>
+					<!--<div class="bracket-element bracket-game bracket-thirdplacematch" style="margin-top:11px;">
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-cell bracket-cell-r1">
+							<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
+						</div>
+						<div class="bracket-thirdplacematchlabel" style="position:absolute;width:100%;text-align:center;top:-6px"><b>3rd Place Match</b></div>
+					</div>-->
 				</div>
 			</div>
-			<div class="bracket-column bracket-connector-column" style="width: 20px;">
-				<div style="height: 75px;" class="bracket-placeholder"></div>
-				<div style="height: 26px;" class="bracket-connector bracket-connector-down">
-					<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px">
-						<div style="width:9px;height:16px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>
-						<div style="width:9px;height:8px"> </div>
-					</div>
-					<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
-						<div style="width:9px;height:18px;"> </div>
-						<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
-					</div>
-				</div>
-				<div style="height: 22px;" class="bracket-placeholder"></div>
-				<div style="height: 26px;" class="bracket-connector bracket-connector-up">
-					<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;">
-						<div style="width:9px;height:8px"> </div>
-						<div style="width:9px;height:16px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>
-					</div>
-					<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
-						<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>
-						<div style="width:9px;height:18px;"> </div>
-					</div>
-				</div>
-				<div style="height:35px;" class="bracket-placeholder"></div>
-			</div>
-			<div style="width: 150px;" class="bracket-column bracket-game-column bracket-column-break">
-				<div class="bracket-header-container" style="height:40px;margin-top:0px"><div class="bracket-header" id="R2"><input type="text" value="Finals"/></div></div>
-				<div class="bracket-element bracket-game ui-widget-content">
-					<div class="bracket-cell bracket-cell-r2">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-					<div class="bracket-cell bracket-cell-r2">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-				</div>
-			</div>
-			<div style="width: 150px;" class="bracket-column bracket-game-column">
-				<div class="bracket-header-container" style="height:64px;margin-top:16px"><div class="bracket-header" id="L1"><input type="text" value="Loser's Round 1"/></div></div>
-				<div class="bracket-element bracket-game ui-widget-content">
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-				</div>
-			</div>
-			<div style="width:20px;" class="bracket-column bracket-connector-column">
-				<div style="height: 80px;" class="bracket-placeholder"></div>
-				<div style="height: 14px;" class="bracket-connector bracket-connector-drop">
-					<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;height:100%;"> </div>
-					<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;height:12px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
-				</div>
-				<div style="height: 21px;" class="bracket-placeholder"></div>
-				<div style="height: 0px;border-bottom:solid #aaa 2px;" class="bracket-connector bracket-connector-flat"> </div>
-				<div style="height: 35px;" class="bracket-placeholder"></div>
-			</div>
-			<div style="width: 150px;" class="bracket-column bracket-game-column">
-				<div class="bracket-header-container" style="height:52px;margin-top:16px"><div class="bracket-header" id="L2"><input type="text" value="Loser's Finals"/></div></div>
-				<div class="bracket-element bracket-game ui-widget-content">
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-				</div>
-			</div>
-		</div><!--
-		--><div style="width:170px;" class="bracket-section">
-			<div style="width: 20px;" class="bracket-column bracket-connector-column">
-				<div style="height: 111px;" class="bracket-placeholder"></div>
-				<div style="height: 78px;" class="bracket-connector bracket-connector-down">
-					<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px">
-						<div style="width:9px;height:68px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>
-						<div style="width:9px;height:8px"> </div>
-					</div>
-					<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
-						<div style="width:9px;height:70px;"> </div>
-						<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
-					</div>
-				</div>
-				<div style="height: 22px;" class="bracket-placeholder"></div>
-				<div style="height: 78px;" class="bracket-connector bracket-connector-up">
-					<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;">
-						<div style="width:9px;height:8px"> </div>
-						<div style="width:9px;height:68px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>
-					</div>
-					<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">
-						<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>
-						<div style="width:9px;height:70px;"> </div>
-					</div>
-				</div>
-				<div style="height:35px;" class="bracket-placeholder"></div>
-			</div>
-			<div style="width: 150px;" class="bracket-column bracket-game-column">
-				<div class="bracket-header-container" style="height:164px;margin-top:0px"><div class="bracket-header" id="R3"><input type="text" value="Grand Finals"/></div></div>
-				<div class="bracket-element bracket-game ui-widget-content">
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-				</div>
-				<!--<div class="bracket-element bracket-game bracket-thirdplacematch" style="margin-top:11px;">
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-					<div class="bracket-cell bracket-cell-r1">
-						<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>
-					</div>
-					<div class="bracket-thirdplacematchlabel" style="position:absolute;width:100%;text-align:center;top:-6px"><b>3rd Place Match</b></div>
-				</div>-->
-			</div>
+			<div style="clear:left;"> </div>
 		</div>
-		<div style="clear:left;"> </div>
 	</div>
 </body>
 </html>

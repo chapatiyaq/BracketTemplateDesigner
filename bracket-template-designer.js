@@ -692,6 +692,17 @@ $(function() {
 			$('.bracket .empty-target').removeClass('empty-target');
 		}
 	});
+	$( "#generated-wikitext-dialog" ).dialog({
+		autoOpen: false,
+		modal: true,
+		title: 'Generated wikitext',
+		width: '70%',
+		buttons: {
+			'OK' : function() {			
+				$(this).dialog('close');
+			}
+		}
+	})
 	var identedText = function(text, identation) {
 		return "\t" + text.replace(/\n/g, "\n\t") + "\n";
 	}
@@ -715,12 +726,10 @@ $(function() {
 			'		<div class="bracket-player-top" style="{{#if:{{{@topPlayerIdrace|}}}|background:{{RaceColor|{{{@topPlayerIdrace}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">' +
 				'&nbsp;{{#if:{{{@topPlayerIdflag|}}}|{{flag/{{lc:{{{@topPlayerIdflag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{@topPlayerId|@topPlayerId}}}</span>' +
 				'<div class="bracket-score" style="width:@scoreWidthpx">{{{@topPlayerIdscore|}}}</div></div></div>' + "\n" +
-			'	</div>' + "\n" +
 			'	<div class="@bottomCellClass" style="{{#if:{{{@gameIdwin|}}}|font-weight:bold}}">' + "\n" +
 			'		<div class="bracket-player-bottom" style="{{#if:{{{@bottomPlayerIdrace|}}}|background:{{RaceColor|{{{@bottomPlayerIdrace}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">' +
 				'&nbsp;{{#if:{{{@bottomPlayerIdflag|}}}|{{flag/{{lc:{{{@bottomPlayerIdflag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{@bottomPlayerId|@bottomPlayerId}}}</span>' +
 				'<div class="bracket-score" style="width:@scoreWidthpx">{{{@bottomPlayerIdscore|}}}</div></div></div>' + "\n" +
-			'	</div>' + "\n" +
 			'</div>'
 	};
 	var testFunction = function () {
@@ -832,9 +841,12 @@ $(function() {
 			.replace('@connectorColumnTotalWidth', connectorColumnTotalWidth)
 			.replace('@additionalWidth', additionalWidth)
 		);
+		wikitext = wikitext.replace(/^\t/gm, '');
+		$('#generated-wikitext').text(wikitext);
+		$('#generated-wikitext-dialog').dialog('open');
+		
 		$htmlContainer.html($wikiBracket);
-		console.log(wikitext);
-		console.log('html', $htmlContainer.html());
+		//console.log('html', $htmlContainer.html());
 	};
 	$('#convert-to-wikitext').click(convertToWikitext);
 });

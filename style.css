@@ -2,12 +2,21 @@ body {
 	font-family: Arial,x-small sans-serif;
 	font-size: 13px;
 	line-height: 1.5em;
+	padding: 0 20px;
+}
+h1 {
+	font-size: 32px;
+	font-weight: normal;
+	letter-spacing: -1px;
 }
 .ui-widget,
 .ui-widget input,
 .ui-widget button,
 .ui-widget select {
-	font-family: Arial,x-small sans-serif;	
+	font-family: Arial,x-small sans-serif;
+}
+.ui-widget textarea {
+	font-family: Consolas,monospace;
 }
 .ui-menu.ui-widget-content {
 	padding: 2px;
@@ -22,10 +31,16 @@ body {
 #simple-height-dialog {
 	text-align: center;
 }
+#generated-wikitext {
+	width: 100%!important;
+}
+.bracket-options {
+	margin: 10px 0;
+}
 .bracket-toolbar {
-	font-size: 11px;
 	padding: 10px;
-	background: #dedede;
+	background: #f0f0f0;
+	border: 1px solid #e8e8e8;
 }
 .bracket-toolbar-title {
 	display: inline-block;
@@ -34,33 +49,34 @@ body {
 .bracket-toolbar-item {
 	cursor: move;
 	display: inline-block;
+	font-size: 11px;
 	margin-right: 10px;
 	padding: 5px 10px;
-	background: #f0f0f0;
+	background: #f8f8f8;
 	color: #808080;
 	border-radius: 3px;
 	border: 1px solid #aaa;
 	white-space: nowrap;
 }
-.bracket-toolbar-item.bracket-toolbar-connector-down {
-	width: 10px;
-	height: 20px;
-	background: #f0f0f0 url(images/down-connector.png);
-}
 .bracket-toolbar-item.bracket-toolbar-connector-up {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(images/up-connector.png);
+	background-image: url(images/up-connector.png);
+}
+.bracket-toolbar-item.bracket-toolbar-connector-down {
+	width: 10px;
+	height: 20px;
+	background-image: url(images/down-connector.png);
 }
 .bracket-toolbar-item.bracket-toolbar-connector-drop {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(images/drop-connector.png);
+	background-image: url(images/drop-connector.png);
 }
 .bracket-toolbar-item.bracket-toolbar-connector-flat {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(images/flat-connector.png);
+	background-image: url(images/flat-connector.png);
 }
 .bracket-headers {
 	border-collapse: collapse;
@@ -135,6 +151,12 @@ body {
 .bracket-column-header.bracket-column-header-break {
 	color: rgba(255, 0, 0, .8);
 	font-weight: bold;
+}
+.bracket-container {
+	width: 100%;
+	border: 1px solid #e8e8e8;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .bracket-section {
 	float: left;
