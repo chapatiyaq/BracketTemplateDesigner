@@ -45,22 +45,22 @@ body {
 .bracket-toolbar-item.bracket-toolbar-connector-down {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(down-connector.png);
+	background: #f0f0f0 url(images/down-connector.png);
 }
 .bracket-toolbar-item.bracket-toolbar-connector-up {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(up-connector.png);
+	background: #f0f0f0 url(images/up-connector.png);
 }
 .bracket-toolbar-item.bracket-toolbar-connector-drop {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(drop-connector.png);
+	background: #f0f0f0 url(images/drop-connector.png);
 }
 .bracket-toolbar-item.bracket-toolbar-connector-flat {
 	width: 10px;
 	height: 20px;
-	background: #f0f0f0 url(flat-connector.png);
+	background: #f0f0f0 url(images/flat-connector.png);
 }
 .bracket-headers {
 	border-collapse: collapse;
@@ -191,7 +191,7 @@ body {
 }
 .bracket-cell-helper-on .bracket-player-top,
 .bracket-cell-helper-on .bracket-player-bottom {
-	background-image: url(middle.png);
+	background-image: url(images/middle.png);
 	background-position: 0 1px;
 }
 .bracket-resizable-bottom-borders-on .bracket-cell .bracket-player-top {
