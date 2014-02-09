@@ -1,0 +1,112 @@
+<includeonly><div style="width:{{#expr:{{{column-width|170}}}*3+45{{#if:{{{R3W1score2|}}}|+{{{score-width|21}}}}}}}px" class="bracket">
+<div style="width:{{#expr:{{{column-width|170}}}*2+20}}px;float:left"> <!-- DE section -->
+	<div class="bracket-column" style="width:{{{column-width|170}}}px">
+		<div style="height:40px;margin-top:0px">{{#ifeq:true|{{{hideroundtitles}}}||<div class="bracket-header">{{{R1|Semifinals}}}</div>}}</div>
+		<div class="bracket-game">
+			<div class="bracket-cell-r1" style="{{#if:{{{R1D1win|}}}|font-weight:bold}}">
+				<div class="bracket-player-top" style="{{#if:{{{R1D1race|}}}|background:{{RaceColor|{{{R1D1race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R1D1flag|}}}|{{flag/{{lc:{{{R1D1flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R1D1|R1D1}}}</span><div class="bracket-score" style="width:21px">{{{R1D1score|}}}</div></div></div>
+				{{#if:{{{R1G1details|}}}|<div class="bracket-game-details" style="margin-left:{{{column-width|150}}}px;">
+					{{BracketMatchPlayers|{{{R1D1|TBD}}}|{{{R1D1race|}}}|{{{R1D2|TBD}}}|{{{R1D2race|}}}}} {{{R1G1details}}}</div>}}
+			<div class="bracket-cell-r1" style="{{#if:{{{R1D2win|}}}|font-weight:bold}}">
+				<div class="bracket-player-bottom" style="{{#if:{{{R1D2race|}}}|background:{{RaceColor|{{{R1D2race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R1D2flag|}}}|{{flag/{{lc:{{{R1D2flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R1D2|R1D2}}}</span><div class="bracket-score" style="width:21px">{{{R1D2score|}}}</div></div></div>
+		</div>
+		<div class="bracket-game">
+			<div class="bracket-cell-r1" style="{{#if:{{{R1D3win|}}}|font-weight:bold}}">
+				<div class="bracket-player-top" style="{{#if:{{{R1D3race|}}}|background:{{RaceColor|{{{R1D3race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R1D3flag|}}}|{{flag/{{lc:{{{R1D3flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R1D3|R1D3}}}</span><div class="bracket-score" style="width:21px">{{{R1D3score|}}}</div></div></div>
+				{{#if:{{{R1G2details|}}}|<div class="bracket-game-details" style="margin-left:{{{column-width|150}}}px;">
+					{{BracketMatchPlayers|{{{R1D3|TBD}}}|{{{R1D3race|}}}|{{{R1D4|TBD}}}|{{{R1D4race|}}}}} {{{R1G2details}}}</div>}}
+			<div class="bracket-cell-r1" style="{{#if:{{{R1D4win|}}}|font-weight:bold}}">
+				<div class="bracket-player-bottom" style="{{#if:{{{R1D4race|}}}|background:{{RaceColor|{{{R1D4race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R1D4flag|}}}|{{flag/{{lc:{{{R1D4flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R1D4|R1D4}}}</span><div class="bracket-score" style="width:21px">{{{R1D4score|}}}</div></div></div>
+		</div>
+	</div>
+	<div class="bracket-column" style="width:20px">
+	<div style="float:left;width:9px">
+		<div style="width:9px;height:75px"> </div>
+		<div style="width:9px;height:16px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>
+		<div style="width:9px;height:38px"> </div>
+		<div style="width:9px;height:16px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>
+		<div style="width:9px;height:33px"> </div>
+	</div>
+	<div style="float:left;width:9px;">
+		<div style="width:9px;height:93px;"> </div>
+		<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
+		<div style="width:9px;height:22px;"> </div>
+		<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>
+		<div style="width:9px;height:51px;"> </div>
+	</div>
+	</div>
+	<div class="bracket-column" style="width:{{{column-width|170}}}px">
+		<div style="height:40px;margin-top:0px">{{#ifeq:true|{{{hideroundtitles}}}||<div class="bracket-header">{{{R2|Winner's Finals}}}</div>}}</div>
+		<div class="bracket-game">
+			<div class="bracket-cell-r2" style="{{#if:{{{R2W1win|}}}|font-weight:bold}}">
+				<div class="bracket-player-top" style="{{#if:{{{R2W1race|}}}|background:{{RaceColor|{{{R2W1race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R2W1flag|}}}|{{flag/{{lc:{{{R2W1flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R2W1|R2W1}}}</span><div class="bracket-score" style="width:21px">{{{R2W1score|}}}</div></div></div>
+				{{#if:{{{R2G1details|}}}|<div class="bracket-game-details" style="margin-left:{{{column-width|150}}}px;">
+					{{BracketMatchPlayers|{{{R2W1|TBD}}}|{{{R2W1race|}}}|{{{R2W2|TBD}}}|{{{R2W2race|}}}}} {{{R2G1details}}}</div>}}
+			<div class="bracket-cell-r2" style="{{#if:{{{R2W2win|}}}|font-weight:bold}}">
+				<div class="bracket-player-bottom" style="{{#if:{{{R2W2race|}}}|background:{{RaceColor|{{{R2W2race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R2W2flag|}}}|{{flag/{{lc:{{{R2W2flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R2W2|R2W2}}}</span><div class="bracket-score" style="width:21px">{{{R2W2score|}}}</div></div></div>
+		</div>
+	</div>
+	<div class="bracket-column" style="width:{{{column-width|170}}}px">
+		<div style="height:64px;margin-top:16px">{{#ifeq:true|{{{hideroundtitles}}}||<div class="bracket-header">{{{L1|Loser's Round 1}}}</div>}}</div>
+		<div class="bracket-game">
+			<div class="bracket-cell-r1" style="{{#if:{{{R1D5win|}}}|font-weight:bold}}">
+				<div class="bracket-player-top" style="{{#if:{{{R1D5race|}}}|background:{{RaceColor|{{{R1D5race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R1D5flag|}}}|{{flag/{{lc:{{{R1D5flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R1D5|R1D5}}}</span><div class="bracket-score" style="width:21px">{{{R1D5score|}}}</div></div></div>
+				{{#if:{{{R1G3details|}}}|<div class="bracket-game-details" style="margin-left:{{{column-width|150}}}px;">
+					{{BracketMatchPlayers|{{{R1D5|TBD}}}|{{{R1D5race|}}}|{{{R1D6|TBD}}}|{{{R1D6race|}}}}} {{{R1G3details}}}</div>}}
+			<div class="bracket-cell-r1" style="{{#if:{{{R1D6win|}}}|font-weight:bold}}">
+				<div class="bracket-player-bottom" style="{{#if:{{{R1D6race|}}}|background:{{RaceColor|{{{R1D6race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R1D6flag|}}}|{{flag/{{lc:{{{R1D6flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R1D6|R1D6}}}</span><div class="bracket-score" style="width:21px">{{{R1D6score|}}}</div></div></div>
+		</div>
+	</div>
+	<div class="bracket-column" style="width:20px">
+	<div style="float:left;width:9px">
+		<div style="width:9px;height:115px;border-bottom:solid #aaa 2px"> </div>
+		<div style="width:9px;height:23px"> </div>
+	</div>
+	<div style="float:left;width:9px;">
+		<div style="width:9px;height:80px;"> </div>
+		<div style="width:9px;height:12px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
+		<div style="width:11px;height:21px;border-bottom:solid #aaa 2px"> </div>
+		<div style="width:9px;height:23px;"> </div>
+	</div>
+	</div>
+	<div class="bracket-column" style="width:{{{column-width|170}}}px">
+		<div style="height:52px;margin-top:16px">{{#ifeq:true|{{{hideroundtitles}}}||<div class="bracket-header">{{{L2|Loser's Finals}}}</div>}}</div>
+		<div class="bracket-game">
+			<div class="bracket-cell-r1" style="{{#if:{{{R2D1win|}}}|font-weight:bold}}">
+				<div class="bracket-player-top" style="{{#if:{{{R2D1race|}}}|background:{{RaceColor|{{{R2D1race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R2D1flag|}}}|{{flag/{{lc:{{{R2D1flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R2D1|R2D1}}}</span><div class="bracket-score" style="width:21px">{{{R2D1score|}}}</div></div></div>
+				{{#if:{{{R2G2details|}}}|<div class="bracket-game-details" style="margin-left:{{{column-width|150}}}px;">
+					{{BracketMatchPlayers|{{{R2D1|TBD}}}|{{{R2D1race|}}}|{{{R2W3|TBD}}}|{{{R2W3race|}}}}} {{{R2G2details}}}</div>}}
+			<div class="bracket-cell-r1" style="{{#if:{{{R2W3win|}}}|font-weight:bold}}">
+				<div class="bracket-player-bottom" style="{{#if:{{{R2W3race|}}}|background:{{RaceColor|{{{R2W3race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R2W3flag|}}}|{{flag/{{lc:{{{R2W3flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R2W3|R2W3}}}</span><div class="bracket-score" style="width:21px">{{{R2W3score|}}}</div></div></div>
+		</div>
+	</div>
+</div> <!-- DE section end -->
+	<div class="bracket-column" style="width:20px">
+	<div style="float:left;width:9px">
+		<div style="width:9px;height:111px"> </div>
+		<div style="width:9px;height:68px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>
+		<div style="width:9px;height:38px"> </div>
+		<div style="width:9px;height:68px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>
+		<div style="width:9px;height:0px"> </div>
+	</div>
+	<div style="float:left;width:9px;">
+		<div style="width:9px;height:181px;"> </div>
+		<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>
+		<div style="width:9px;height:22px;"> </div>
+		<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>
+		<div style="width:9px;height:0px;"> </div>
+	</div>
+	</div>
+	<div class="bracket-column" style="width:{{#expr:{{{column-width|170}}}{{#if:{{{R3W1score2|}}}|+{{{score-width|21}}}}}}}px">
+		<div style="height:164px;margin-top:0px">{{#ifeq:true|{{{hideroundtitles}}}||<div class="bracket-header">{{{R3|Grand Finals}}}</div>}}</div>
+		<div class="bracket-game">
+			<div class="bracket-cell-r1" style="{{#if:{{{R3W1win|}}}|font-weight:bold}}">
+				<div class="bracket-player-top" style="{{#if:{{{R3W1race|}}}|background:{{RaceColor|{{{R3W1race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R3W1flag|}}}|{{flag/{{lc:{{{R3W1flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R3W1|R3W1}}}</span><div class="bracket-score" style="width:21px;{{#if:{{{R3W1score2|}}}|right:{{#expr:{{{score-width|21}}}+1}}px}}">{{{R3W1score|}}}</div>{{#if:{{{R3W1score2|}}}|<div class="bracket-score" style="width:{{{score-width|21}}}px">{{{R3W1score2|}}}</div>}}</div></div>
+				{{#if:{{{R3G1details|}}}|<div class="bracket-game-details" style="margin-left:{{{column-width|150}}}px;">
+					{{BracketMatchPlayers|{{{R3W1|TBD}}}|{{{R3W1race|}}}|{{{R3W2|TBD}}}|{{{R3W2race|}}}}} {{{R3G1details}}}</div>}}
+			<div class="bracket-cell-r1" style="{{#if:{{{R3W2win|}}}|font-weight:bold}}">
+				<div class="bracket-player-bottom" style="{{#if:{{{R3W2race|}}}|background:{{RaceColor|{{{R3W2race}}}}};}} padding-right:{{#expr:{{{score-width|21}}}+2}}px">&nbsp;{{#if:{{{R3W2flag|}}}|{{flag/{{lc:{{{R3W2flag}}}}}}}}}&nbsp;<span style="vertical-align:-1px;">{{{R3W2|R3W2}}}</span><div class="bracket-score" style="width:21px;{{#if:{{{R3W2score2|}}}|right:{{#expr:{{{score-width|21}}}+1}}px}}">{{{R3W2score|}}}</div>{{#if:{{{R3W2score2|}}}|<div class="bracket-score" style="width:{{{score-width|21}}}px">{{{R3W2score2|}}}</div>}}</div></div>
+		</div>
+	</div>
+<div style="clear:left"> </div></div><!--
+--></includeonly><noinclude>{{documentation}} [[Category:Brackets]]</noinclude>

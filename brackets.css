@@ -1,0 +1,137 @@
+/* Brackets */
+.bracket {
+  font-size: 11px;
+  background: white;
+}
+
+.bracket-column {
+	float: left;
+	position: relative;
+}
+
+.bracket-header {
+	border-radius: 2px;
+	border: 1px solid #aaa;
+	padding: 2px 0 2px 0;
+	position: relative;
+	left: 0;
+	right: 0;
+	line-height:18px;
+	margin-bottom: 20px;
+	text-align: center;
+	background: #ebebeb;
+}
+
+.bracket-cell-r1 {
+	height: 36px;
+}
+.bracket-cell-r2 {
+	height: 72px;
+}
+.bracket-cell-r3 {
+	height: 144px;
+}
+.bracket-cell-r4 {
+	height: 288px;
+}
+.bracket-cell-r5 {
+	height: 576px;
+}
+.bracket-cell-r6 {
+	height: 1152px;
+}
+.bracket-cell-r7 {
+	height: 2304px;
+}
+.bracket-cell-r1, .bracket-cell-r2, .bracket-cell-r3, .bracket-cell-r4, .bracket-cell-r5, .bracket-cell-r6, .bracket-cell-r7 {
+	position: relative;
+}
+.bracket-team-top, .bracket-team-bottom, .bracket-player-top, .bracket-player-bottom {
+	border-radius:0 0 2px 2px;
+	border:solid #aaa 1px;
+	position:absolute;
+	padding: 1px;
+	min-height:20px;
+	line-height:18px;
+	background: #f2f2f2;
+	left:0;
+	right:0;
+}
+.bracket-team-top, .bracket-player-top {
+	bottom:0;
+	border-radius:2px 2px 0 0;
+}
+.bracket-score {
+	text-align:center;
+	background:#ebebeb;
+	border-left:1px solid #aaa;
+	position:absolute;
+	line-height:22px;
+	right:0;
+	top:0;
+	bottom:0;
+}
+.bracket-team-bottom .bracket-score, .bracket-player-bottom .bracket-score {
+	border-bottom-right-radius: 2px;
+}
+.bracket-team-top .bracket-score, .bracket-player-bottom .bracket-score {
+	border-top-right-radius: 2px;
+}
+.bracket-hover {
+	-moz-box-shadow: 0 0 2px #000;
+	-webkit-box-shadow: 0 0 2px #000;
+	box-shadow: 0 0 2px #000;
+	border-color: #000;
+}
+.bracket-game-details {
+	z-index:100;
+	width:200px;
+	padding: 2px 0px;
+	position:absolute;
+	display: none;
+	text-align:center;
+	border:1px solid #aaa;
+	background: rgba(242, 242, 242, 0.9);
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 4px 4px 6px #BBBBBB;
+}
+.bracket-team-game-details {
+	width:400px;
+}
+.bracket-game-details .to-anchor {
+	display: none;
+}
+.bracket-icons {
+	border-top: 1px solid #aaa;
+}
+.bracket-game .icon { 
+	height: 12px;
+	width: 12px;
+	background: url(http://wiki.teamliquid.net/starcraft/images2/c/c5/Bracketinfoicon.png) no-repeat transparent; 
+	z-index: 50; 
+	right: 16px;
+	position: absolute;
+}
+.bracket-game { 
+	position: relative; 
+}
+.bracket-popup-title {
+	display:table-row; 
+	font-weight:bold; 
+	line-height:16px; 
+	padding:2px 5px;
+}
+.bracket-popup-title-left {
+	display:table-cell;
+	text-align:right;
+	width:200px;
+	padding:2px;
+	border-bottom:1px solid #aaa;
+}
+.bracket-popup-title-right {
+	display:table-cell;
+	text-align:left;
+	width:200px;
+	padding:2px;
+	border-bottom:1px solid #aaa;
+}
