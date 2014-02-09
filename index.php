@@ -92,6 +92,15 @@
 		<input type="checkbox" id="bracket-cell-helper"/>
 		<label for="bracket-cell-helper">Show bracket cell helpers</label>
 		<br/>
+		<label class="text-input-label" for="bracket-game-column-width">Game column width (in pixels):</label>
+		<input type="text" size="3" id="bracket-game-column-width" value="150"/>
+		<br/>
+		<label class="text-input-label" for="bracket-connector-column-width">Connector column width (in pixels):</label>
+		<input type="text" size="3" id="bracket-connector-column-width" value="20"/>
+		<br/>
+		<label class="text-input-label" for="bracket-score-width">Score width (in pixels):</label>
+		<input type="text" size="3" id="bracket-score-width" value="21"/>
+		<br/>
 		<input type="button" id="convert-to-wikitext" value="Convert to wikitext"/>
 	</div>
 	<div class="bracket-toolbar">
