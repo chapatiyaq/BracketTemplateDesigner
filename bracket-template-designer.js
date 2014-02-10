@@ -370,7 +370,7 @@ $(function() {
 		insertSection($(ui.target).index(), 'after');
 	};
 	var insertSection = function (index, side) {
-		var width = 150;
+		var width = 170;
 		$.fn[side].apply($('.bracket-column-header-section').eq(index),
 			[insertStrings.columnHeaderSection.replace('@width', width)]);
 		$.fn[side].apply($('.bracket-section-header').eq(index),
@@ -399,7 +399,7 @@ $(function() {
 			break;
 		case 'game':
 		default:
-			width = 150;
+			width = 170;
 		}
 		$.fn[side].apply($('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex),
 			[insertStrings.columnHeader
@@ -508,6 +508,21 @@ $(function() {
 				containment: ".bracket-column",
 				baseY: 36
 			});
+		$(this).find('.bracket-player-top')
+			.append($('<input>')
+				.attr('type', 'text')
+			);
+		$(this).find('.bracket-player-bottom')
+			.append($('<input>')
+				.attr('type', 'text')
+			);
+		$(this).find('.bracket-cell').eq(1)
+			.append($('<div>')
+				.addClass('bracket-game-id')
+				.html($('<input>')
+					.attr('type', 'text')
+				)
+			);
 	});
 	$('.bracket-header-container').livequery(function () {
 		$(this)
@@ -1029,6 +1044,7 @@ $(function() {
 		$('#generated-wikitext').text(wikitext);
 		$('#generated-wikitext-dialog').dialog('open');
 	};
+	$('#convert-to-wikitext').click(convertToWikitext);
 	var addPlaceholderIfNeeded = function (subcolumn, flatAfter) {
 		if (subcolumn.placeholderHeight > 0) {
 			subcolumn.innerWikitext += identedText(htmlStrings.columnPlaceholder
@@ -1039,6 +1055,61 @@ $(function() {
 			subcolumn.placeholderHeight = 0;
 		}
 	};
-	$('#convert-to-wikitext').click(convertToWikitext);
+	var editGamePlayerIDs = function () {
+		var $dialog = $('#game-player-ids-dialog'),
+			$ul, $sectionHeader, $columnHeader,
+			$sectionDiv = '';
 
+		$dialog = $('#game-player-ids-dialog').empty();
+		$ul = $('<ul>').appendTo($dialog);
+		$('.bracket-section').each( function(sectionIndex) {
+			$sectionHeader = $('.bracket-section-header').eq(sectionIndex);
+			$ul.append($('<li>')
+				.html($('<a>')
+					.attr('href', '#section-' + $sectionHeader.text())
+					.text('Section ' + $sectionHeader.text())
+				)
+			);
+			$sectionDiv = $('<div>').attr('id', 'section-' + $sectionHeader.text());
+			$dialog.append($sectionDiv);
+			
+			$(this).find('.bracket-game-column').each( function(columnIndex) {
+				$columnHeader = $('.bracket-column-header-section').eq(sectionIndex)
+					.find('.bracket-column-header').eq(columnIndex);
+				$sectionDiv.append($('<span>').text('Column ' + $columnHeader.text()));
+				
+				$(this).find('.bracket-game').each( function(index) {
+					$sectionDiv.append($('<input>')
+						.attr('type', 'text')
+						.val(index)
+					);
+				});
+			});
+		});
+		$('#game-player-ids-dialog').dialog('open');
+		try {
+			$dialog.tabs('refresh');
+			//$dialog.display(1);
+		} catch(e) {
+			$dialog.tabs();
+		}
+	};
+	$('#edit-game-player-ids').click(editGamePlayerIDs);
+	$('#game-player-ids-dialog').dialog({
+		autoOpen: false,
+		modal: true,
+		title: 'Edit IDs of games and players',
+		minHeight: 450,
+		width: 450,
+		buttons: {
+			'OK' : function() {
+				//$(this).tabs('destroy');
+				$(this).dialog('close');
+			},
+			'Cancel' : function() {
+				//$(this).tabs('destroy');
+				$(this).dialog('close');
+			}
+		}
+	});
 });

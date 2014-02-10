@@ -34,6 +34,13 @@ h1 {
 #generated-wikitext {
 	width: 100%!important;
 }
+#game-player-ids-dialog > div > span {
+	width: 100%;
+	font-weight: bold;
+}
+#game-player-ids-dialog > div > input {
+	display: block;
+}
 .bracket-options {
 	margin: 10px 0;
 }
@@ -202,6 +209,51 @@ h1 {
 }
 .bracket-game {
 	background: transparent;
+}
+/*.bracket-game:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -0.25em;
+}*/
+.bracket-game .bracket-game-id-container {
+	position: absolute;
+	top: 50%;
+	right: 0;
+}
+.bracket-game .bracket-game-id {
+	position: absolute;
+	top: -10px;
+	right: 1px;
+	width: 60px;
+	background-color: #aaa;
+	border-radius: 3px;
+	font-size: 20px;
+	height: 20px;
+	line-height: 20px;
+	padding-left: 0;
+	z-index: 99;
+}
+.bracket-player-top input,
+.bracket-player-bottom input,
+.bracket-game .bracket-game-id input {
+	border: 0;
+	background: transparent;
+	height: 17px;
+	margin: 0;
+	vertical-align: top;
+	font-size: 12px;
+}
+.bracket-player-top input,
+.bracket-player-bottom input {
+	width: 60px;
+	margin-left: 10px;
+}
+.bracket-game .bracket-game-id input {
+	width: 100%;
+	font-weight: bold;
+	text-align: center;
 }
 .bracket-game.active,
 .bracket-header-container.active,
