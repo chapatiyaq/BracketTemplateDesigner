@@ -23,7 +23,24 @@ $(function() {
 		'columnHeaderSection': '<div style="width:@widthpx;" class="bracket-column-header-section"></div>',
 		'section': '<div style="width:@widthpx;" class="bracket-section">&nbsp;</div>',
 		'columnHeader': '<div style="width:@widthpx;" class="bracket-column-header">1</div>',
-		'column': '<div style="width:@widthpx;" class="bracket-column bracket-@type-column">&nbsp;</div>'
+		'column': '<div style="width:@widthpx;" class="bracket-column bracket-@type-column">&nbsp;</div>',
+		'game': '<div class="bracket-element bracket-game" id="bracket-game-">' +
+				'<div class="bracket-cell bracket-cell-r1" id="bracket-cell-">' +
+					'<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>' +
+				'</div>' +
+				'<div class="bracket-cell bracket-cell-r1" id="bracket-cell-">' +
+					'<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>' +
+				'</div>' +
+			'</div>',
+		'thirdplacematch': '<div class="bracket-element bracket-game bracket-thirdplacematch" id="bracket-game-" style="margin-top:11px;">' +
+				'<div class="bracket-cell bracket-cell-r1" id="bracket-cell-">' +
+					'<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>' +
+				'</div>' +
+				'<div class="bracket-cell bracket-cell-r1" id="bracket-cell-">' +
+					'<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>' +
+				'</div>' +
+				'<div class="bracket-thirdplacematchlabel" style="position:absolute;width:100%;text-align:center;top:-6px"><b>3rd Place Match</b></div>' +
+			'</div>'
 	};
 
 	var sameColumnWidth = $('#same-column-width').is(':checked');
@@ -61,14 +78,23 @@ $(function() {
 		}
 	});
 
-	$('#bracket-cell-helper').click(function() {
+	$('#bracket-show-cell-helper').click(function() {
 		$('.bracket').toggleClass('bracket-cell-helper-on', $(this).is(':checked'));
 	});
-	$('.bracket').toggleClass('bracket-cell-helper-on', $('#bracket-cell-helper').is(':checked'));
-	$('#bracket-resizable-bottom-borders').click(function() {
+	$('#bracket-show-resizable-bottom-borders').click(function() {
 		$('.bracket').toggleClass('bracket-resizable-bottom-borders-on', $(this).is(':checked'));
 	});
-	$('.bracket').toggleClass('bracket-resizable-bottom-borders-on', $('#bracket-resizable-bottom-borders').is(':checked'));
+	$('#bracket-show-game-ids').click(function() {
+		$('.bracket').toggleClass('bracket-game-ids-on', $(this).is(':checked'));
+	});
+	$('#bracket-show-cell-ids').click(function() {
+		$('.bracket').toggleClass('bracket-cell-ids-on', $(this).is(':checked'));
+	});
+	$('.bracket')
+		.toggleClass('bracket-cell-helper-on', $('#bracket-show-cell-helper').is(':checked'))
+		.toggleClass('bracket-resizable-bottom-borders-on', $('#bracket-show-resizable-bottom-borders').is(':checked'))
+		.toggleClass('bracket-game-ids-on', $('#bracket-show-game-ids').is(':checked'))
+		.toggleClass('bracket-cell-ids-on', $('#bracket-show-cell-ids').is(':checked'));
 
 	$('.bracket-section-header-row').sortable({
 		placeholder: 'bracket-section-header placeholder',
@@ -96,28 +122,7 @@ $(function() {
 			numberSectionHeaders();
 		}
 	});
-	$('.bracket-column-header-section').sortable({
-		placeholder: 'bracket-column-header placeholder',
-		forcePlaceholderSize: true,
-		//containment: 'parent',
-		stop: function (event, ui) {
-			var oldColumnIndex = parseInt(ui.item.text()) - 1,
-				newColumnIndex = ui.item.index(),
-				$bracketSection = $('.bracket-section').eq(ui.item.parent().index()),
-				$bracketColumn = $bracketSection.find('.bracket-column').eq(oldColumnIndex);
-			if (oldColumnIndex == newColumnIndex) {
-				return true;
-			}
-			$bracketColumn.detach();
-			if (oldColumnIndex < newColumnIndex) {
-				$bracketSection.find('.bracket-column').eq(newColumnIndex - 1).after($bracketColumn);
-			} else {
-				$bracketSection.find('.bracket-column').eq(newColumnIndex).before($bracketColumn);				
-			}
-			numberColumnHeaders();
-			updateSectionsWidth();
-		}
-	});
+	$('.bracket-column-header-row').data('selected', '');
 	var resizeSection = function (sectionIndex, width) {
 		$('.bracket-section').eq(sectionIndex).css('width', width + 'px');
 		$('.bracket-column-header-section').eq(sectionIndex).css('width', width + 'px');
@@ -258,24 +263,9 @@ $(function() {
 				if ($received.is('.bracket-toolbar-header')) {
 					$received.after('<div style="height:40px;margin-top:0px"><div class="bracket-header" id="Rx">Round x</div></div>');
 				} else if ($received.is('.bracket-toolbar-game')) {
-					$received.after($('<div class="bracket-element bracket-game">' +
-						'<div class="bracket-cell bracket-cell-r1">' +
-							'<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>' +
-						'</div>' +
-						'<div class="bracket-cell bracket-cell-r1">' +
-							'<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>' +
-						'</div>' +
-					'</div>'));
+					$received.after(insertStrings.game);
 				} else if ($received.is('.bracket-toolbar-thirdplacematch')) {
-					$received.after('<div class="bracket-element bracket-game bracket-thirdplacematch" style="margin-top:11px;">' +
-						'<div class="bracket-cell bracket-cell-r1">' +
-							'<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>' +
-						'</div>' +
-						'<div class="bracket-cell bracket-cell-r1">' +
-							'<div class="bracket-player-bottom"><div class="bracket-score" style="width:21px"> </div></div>' +
-						'</div>' +
-						'<div class="bracket-thirdplacematchlabel" style="position:absolute;width:100%;text-align:center;top:-6px"><b>3rd Place Match</b></div>' +
-					'</div>');
+					$received.after(insertStrings.thirdplacematch);
 				}
 				break;
 			case 'connector':
@@ -452,6 +442,33 @@ $(function() {
 			})
 			.disableSelection()*/;
 	});
+	$('.bracket-column-header-section').livequery(function () {
+		$(this)
+			.sortable({
+				cancel: '.bracket-column-header:not(.selected)',
+				placeholder: 'bracket-column-header placeholder',
+				forcePlaceholderSize: true,
+				//containment: 'parent',
+				stop: function (event, ui) {
+					var oldColumnIndex = parseInt(ui.item.text()) - 1,
+						newColumnIndex = ui.item.index(),
+						$bracketSection = $('.bracket-section').eq(ui.item.parent().index()),
+						$bracketColumn = $bracketSection.find('.bracket-column').eq(oldColumnIndex);
+					if (oldColumnIndex == newColumnIndex) {
+						return true;
+					}
+					$bracketColumn.detach();
+					if (oldColumnIndex < newColumnIndex) {
+						$bracketSection.find('.bracket-column').eq(newColumnIndex - 1).after($bracketColumn);
+					} else {
+						$bracketSection.find('.bracket-column').eq(newColumnIndex).before($bracketColumn);				
+					}
+					numberColumnHeaders();
+					updateSectionsWidth();
+				}
+			});
+		//$(this).sortable('disable');
+	});
 	$('.bracket-column-header').livequery(function () {
 		var minWidth, maxWidth;
 		if ($(this).is('.bracket-game-column-header')) {
@@ -465,6 +482,7 @@ $(function() {
 			maxWidth = 100;
 		}
 		$(this)
+			.html($('<div>'))
 			.contextmenu({
 				show: false,
 				menu: [
@@ -491,9 +509,30 @@ $(function() {
 					resizeColumns({'sectionIndex': sectionIndex, 'columnIndex': columnIndex}, ui.size.width);
 				}
 			})
-			.disableSelection();
+			.on('click', function (event, ui) {
+				$('.bracket-column-header.selected').removeClass('selected');
+				$(this).addClass('selected');
+			});
 	});
 	$('.bracket-game').livequery(function () {
+		var gameIdRegExp = /bracket-game-([\w]*)/,
+			cellIdRegExp = /bracket-cell-([\w]*)/,
+			gameIdMatch, cellIdMatch,
+			gameId = '', cellId = ['', ''],
+			i;
+
+		gameIdMatch = $(this).attr('id').match(gameIdRegExp);
+		if (gameIdMatch !== null) {
+			gameId = gameIdMatch[1];
+		}
+
+		for (i = 0; i < 2; i++) {
+			cellIdMatch = $(this).find('.bracket-cell').eq(i).attr('id').match(cellIdRegExp);
+			if (cellIdMatch !== null) {
+				cellId[i] = cellIdMatch[1];
+			}
+		}
+
 		$(this)
 			.contextmenu({
 				show: false,
@@ -510,19 +549,26 @@ $(function() {
 			});
 		$(this).find('.bracket-player-top')
 			.append($('<input>')
+				.addClass('bracket-cell-id')
 				.attr('type', 'text')
+				.val(cellId[0])
 			);
 		$(this).find('.bracket-player-bottom')
 			.append($('<input>')
+				.addClass('bracket-cell-id')
 				.attr('type', 'text')
+				.val(cellId[1])
 			);
 		$(this).find('.bracket-cell').eq(1)
 			.append($('<div>')
 				.addClass('bracket-game-id')
 				.html($('<input>')
 					.attr('type', 'text')
+					.val(gameId)
 				)
 			);
+		$(this).data('gameId', gameId);
+		$(this).data('cellId', cellId);
 	});
 	$('.bracket-header-container').livequery(function () {
 		$(this)
@@ -714,7 +760,7 @@ $(function() {
 	var numberColumnHeaders = function () {
 		$('.bracket-column-header-section').each(function (sectionIndex) {
 			$(this).find('.bracket-column-header').each(function (index) {
-				$(this).text(index + 1);
+				$(this).find('div').text(index + 1);
 			});
 		});
 	};
@@ -916,9 +962,9 @@ $(function() {
 									.replace('@topCellClass', $topCell.attr('class').match(/bracket-cell-r[1-7]/)[0])
 									.replace('@bottomCellClass', $bottomCell.attr('class').match(/bracket-cell-r[1-7]/)[0])
 									.replace(/@scoreWidth/g, bracketWidths.score)
-									.replace(/@gameId/g, 'RxGg')
-									.replace(/@topPlayerId/g, 'RxDy')
-									.replace(/@bottomPlayerId/g, 'RxDz')
+									.replace(/@gameId/g, $(this).data('gameId'))
+									.replace(/@topPlayerId/g, $(this).data('cellId')[0])
+									.replace(/@bottomPlayerId/g, $(this).data('cellId')[1])
 								);
 						}
 					});
@@ -1055,12 +1101,12 @@ $(function() {
 			subcolumn.placeholderHeight = 0;
 		}
 	};
-	var editGamePlayerIDs = function () {
-		var $dialog = $('#game-player-ids-dialog'),
+	var editGameCellIDs = function () {
+		var $dialog = $('#game-cell-ids-dialog'),
 			$ul, $sectionHeader, $columnHeader,
 			$sectionDiv = '';
 
-		$dialog = $('#game-player-ids-dialog').empty();
+		$dialog = $('#game-cell-ids-dialog').empty();
 		$ul = $('<ul>').appendTo($dialog);
 		$('.bracket-section').each( function(sectionIndex) {
 			$sectionHeader = $('.bracket-section-header').eq(sectionIndex);
@@ -1086,7 +1132,7 @@ $(function() {
 				});
 			});
 		});
-		$('#game-player-ids-dialog').dialog('open');
+		$('#game-cell-ids-dialog').dialog('open');
 		try {
 			$dialog.tabs('refresh');
 			//$dialog.display(1);
@@ -1094,8 +1140,8 @@ $(function() {
 			$dialog.tabs();
 		}
 	};
-	$('#edit-game-player-ids').click(editGamePlayerIDs);
-	$('#game-player-ids-dialog').dialog({
+	$('#edit-game-cell-ids').click(editGameCellIDs);
+	$('#game-cell-ids-dialog').dialog({
 		autoOpen: false,
 		modal: true,
 		title: 'Edit IDs of games and players',
@@ -1112,4 +1158,6 @@ $(function() {
 			}
 		}
 	});
+
+	numberColumnHeaders();
 });

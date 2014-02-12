@@ -34,15 +34,29 @@ h1 {
 #generated-wikitext {
 	width: 100%!important;
 }
-#game-player-ids-dialog > div > span {
+#game-cell-ids-dialog > div > span {
 	width: 100%;
 	font-weight: bold;
 }
-#game-player-ids-dialog > div > input {
+#game-cell-ids-dialog > div > input {
 	display: block;
 }
 .bracket-options {
 	margin: 10px 0;
+}
+.bracket-options-box {
+	display: table-cell;
+	border: solid white;
+	border-width: 0 5px 5px 0;
+	vertical-align: top;
+	padding: 5px;
+	height: 100%;
+	background: #f8f8f8;
+}
+.bracket-options-box-title {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: 8px;
 }
 .bracket-options .text-input-label {
 	display: inline-block;
@@ -139,14 +153,17 @@ h1 {
 .bracket-column-header {
 	border-color: rgba(0, 0, 0, .2);
 }
-.bracket-section-header:nth-child(7n+1) { background: #9fc5e8; }
-.bracket-section-header:nth-child(7n+2) { background: #b6d7a8; }
-.bracket-section-header:nth-child(7n+3) { background: #ea9999; }
-.bracket-section-header:nth-child(7n+4) { background: #b4a7d6; }
-.bracket-section-header:nth-child(7n+5) { background: #f9cb9c; }
-.bracket-section-header:nth-child(7n+6) { background: #ffe599; }
-.bracket-column-header-section:nth-child(7n+1) .bracket-column-header {	background: #cfe2f3; }
-.bracket-column-header-section:nth-child(7n+2) .bracket-column-header {	background: #d9ead3; }
+.bracket-column-header.selected > div {
+	background: rgba(0, 0, 0, .1);
+}
+.bracket-section-header:not(.placeholder):nth-child(7n+1) { background: #9fc5e8; }
+.bracket-section-header:not(.placeholder):nth-child(7n+2) { background: #b6d7a8; }
+.bracket-section-header:not(.placeholder):nth-child(7n+3) { background: #ea9999; }
+.bracket-section-header:not(.placeholder):nth-child(7n+4) { background: #b4a7d6; }
+.bracket-section-header:not(.placeholder):nth-child(7n+5) { background: #f9cb9c; }
+.bracket-section-header:not(.placeholder):nth-child(7n+6) { background: #ffe599; }
+.bracket-column-header-section:nth-child(7n+1) .bracket-column-header { background: #cfe2f3; }
+.bracket-column-header-section:nth-child(7n+2) .bracket-column-header { background: #d9ead3; }
 .bracket-column-header-section:nth-child(7n+3) .bracket-column-header { background: #f4cccc; }
 .bracket-column-header-section:nth-child(7n+4) .bracket-column-header { background: #d9d2e4; }
 .bracket-column-header-section:nth-child(7n+5) .bracket-column-header { background: #fce5cd; }
@@ -210,19 +227,11 @@ h1 {
 .bracket-game {
 	background: transparent;
 }
-/*.bracket-game:before {
-	content: '';
-	display: inline-block;
-	height: 100%;
-	vertical-align: middle;
-	margin-right: -0.25em;
-}*/
-.bracket-game .bracket-game-id-container {
-	position: absolute;
-	top: 50%;
-	right: 0;
+.bracket-game-ids-on .bracket-game-id {
+	display: block;
 }
-.bracket-game .bracket-game-id {
+.bracket-game-id {
+	display: none;
 	position: absolute;
 	top: -10px;
 	right: 1px;
@@ -235,8 +244,7 @@ h1 {
 	padding-left: 0;
 	z-index: 99;
 }
-.bracket-player-top input,
-.bracket-player-bottom input,
+input.bracket-cell-id,
 .bracket-game .bracket-game-id input {
 	border: 0;
 	background: transparent;
@@ -245,10 +253,13 @@ h1 {
 	vertical-align: top;
 	font-size: 12px;
 }
-.bracket-player-top input,
-.bracket-player-bottom input {
+input.bracket-cell-id {
+	display: none;
 	width: 60px;
 	margin-left: 10px;
+}
+.bracket-cell-ids-on input.bracket-cell-id {
+	display: inline-block;
 }
 .bracket-game .bracket-game-id input {
 	width: 100%;
