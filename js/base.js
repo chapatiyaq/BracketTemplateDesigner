@@ -1,0 +1,2 @@
+var bracketdesigner = {};
+bracketdesigner.config = {};

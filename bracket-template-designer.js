@@ -167,15 +167,16 @@ $(function() {
 		case 'game':
 			$('.bracket-game-column').css('width', width + 'px').each(function () {
 				var columnIndex = $(this).index(),
-					sectionIndex = $(this).parent().index() - 1;
-				$('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex)
-					.css('width', width + 'px');
+					sectionIndex = $(this).parent().index('.bracket-section');
+				resizeGameColumn(sectionIndex, columnIndex, width);
+				//$('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex)
+					//.css('width', width + 'px');
 			});
 			break;
 		case 'connector':
 			$('.bracket-connector-column').css('width', width + 'px').each(function () {
 				var columnIndex = $(this).index(),
-					sectionIndex = $(this).parent().index() - 1;
+					sectionIndex = $(this).parent().index('.bracket-section');
 				$('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex)
 					.css('width', width + 'px');
 
@@ -193,6 +194,16 @@ $(function() {
 		}
 		$('#bracket-' + columnType + '-column-width').val(width);
 		updateSectionsWidth();
+	};
+	var resizeGameColumn = function (sectionIndex, columnIndex, width) {
+		var $column = $('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex),
+			scoreWidth = $('#bracket-score-width').val();
+
+		if ($column.find('.bracket-double-score-game').length > 0) {
+			width += scoreWidth;
+		}
+
+		$column.css('width', width + 'px');
 	};
 	// Deprecated
 	var resizeColumn = function (sectionIndex, columnIndex, width) {
@@ -316,8 +327,13 @@ $(function() {
 		$('#delete-element-dialog').dialog('open');
 	};
 	var addScoreColumn = function (event, ui) {
+		var columnIndex = $(ui.target).closest('.bracket-column').index(),
+			sectionIndex = $(ui.target).closest('.bracket-section').index('.bracket-section');
+		console.log('addScoreColumn', sectionIndex, columnIndex, $(ui.target));
+
 		$('.bracket-double-score-game').removeClass('.bracket-double-score-game');
-		$(ui.target).addClass('.bracket-double-score-game');
+		$(ui.target).closest('.bracket-game').addClass('bracket-double-score-game');
+		resizeGameColumn(sectionIndex, columnIndex, $('#bracket-game-width').val());
 	};
 	var resizeGame = function (event, ui) {
 		$(ui.target).closest('.bracket-game').addClass('resize-target');
@@ -345,7 +361,7 @@ $(function() {
 	};
 	var setAsBreakColumn = function(event, ui) {
 		var columnIndex = $(ui.target).index(),
-			sectionIndex = $(ui.target).parent().index();
+			sectionIndex = $(ui.target).parent().index('.bracket-section');
 
 		$('.bracket-section').eq(sectionIndex).find('.bracket-column-break').removeClass('bracket-column-break');
 		$('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header-break').removeClass('bracket-column-header-break');
@@ -503,7 +519,7 @@ $(function() {
 				maxWidth: maxWidth,
 				resize: function (event, ui) {
 					var columnIndex = $(this).index(),
-						sectionIndex = $(this).parent().index();
+						sectionIndex = $(this).parent().index('.bracket-section');
 					ui.size.width = Math.round(ui.size.width*.5) * 2;
 					//resizeColumn(sectionIndex, columnIndex, ui.size.width);
 					resizeColumns({'sectionIndex': sectionIndex, 'columnIndex': columnIndex}, ui.size.width);
@@ -637,7 +653,7 @@ $(function() {
 			'OK' : function() {
 				var $target = $('.bracket .resize-target'),
 					width = $('#section-width').val(),
-					sectionIndex = $target.index();
+					sectionIndex = $target.index('.bracket-section');
 
 				if (typeof width !== 'undefined' && !isNaN(width)) {
 					$target.css('width', width + 'px');
@@ -666,7 +682,7 @@ $(function() {
 				var $target = $('.bracket .resize-target'),
 					width = $('#column-width').val(),
 					columnIndex = $target.index();
-					sectionIndex = $target.parent().index();
+					sectionIndex = $target.parent().index('.bracket-section');
 
 				if (typeof width !== 'undefined' && !isNaN(width)) {
 					$target.css('width', width + 'px');
