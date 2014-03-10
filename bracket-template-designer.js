@@ -18,12 +18,116 @@ $.ui.plugin.add("resizable", "baseY", {
 	}
 });
 $(function() {
+	var bracketdesigner = {};
+	bracketdesigner.fn = {};
+
+	bracketdesigner.fn.insertGameColumnBefore = function (event, ui) {
+		bracketdesigner.fn.insertColumn(
+			$(ui.target).closest('.bracket-column-header-section').index(),
+			$(ui.target).closest('.bracket-column-header').index(),
+			'game', 'before'
+		);
+	};
+	bracketdesigner.fn.insertGameColumnAfter = function (event, ui) {
+		bracketdesigner.fn.insertColumn(
+			$(ui.target).closest('.bracket-column-header-section').index(),
+			$(ui.target).closest('.bracket-column-header').index(),
+			'game', 'after'
+		);
+	};
+	bracketdesigner.fn.insertConnectorColumnBefore = function (event, ui) {
+		bracketdesigner.fn.insertColumn(
+			$(ui.target).closest('.bracket-column-header-section').index(),
+			$(ui.target).closest('.bracket-column-header').index(),
+			'connector', 'before'
+		);
+	};
+	bracketdesigner.fn.insertConnectorColumnAfter = function (event, ui) {
+		bracketdesigner.fn.insertColumn(
+			$(ui.target).closest('.bracket-column-header-section').index(),
+			$(ui.target).closest('.bracket-column-header').index(),
+			'connector', 'after'
+		);
+	};
+	bracketdesigner.fn.insertColumn = function (sectionIndex, columnIndex, type, side) {
+		var width,
+			$columnHeader, $column;
+		console.log('iC');
+		switch (type) {
+		case 'connector':
+			width = 20;
+			break;
+		case 'game':
+		default:
+			width = 170;
+		}
+		$columnHeader = $(insertStrings.columnHeader
+				.replace('@width', width)
+				.replace('@type', type));
+		$.fn[side].call($('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex),
+			$columnHeader);
+		liveColumnHeader.call($columnHeader);
+
+		$column = $(insertStrings.column
+				.replace('@width', width)
+				.replace('@type', type));
+		$.fn[side].call($('.bracket-section').eq(sectionIndex).find('.bracket-column').eq(columnIndex),
+			$column);
+		liveColumn.call($column);
+		
+		numberColumns();
+	};
+	
+	// bracketdesigner.dialog
+	bracketdesigner.dialog = {};
+	bracketdesigner.dialog.handleCmd = function (event, ui) {
+		console.log('handleCmd', event, ui);
+		bracketdesigner.dialog.dialogs[ui.cmd].init(event, ui);
+		bracketdesigner.dialog.dialogs[ui.cmd].elem.dialog('open');
+	};
+	bracketdesigner.dialog.dialogs = {};
+	bracketdesigner.dialog.dialogs.changeTopMargin = {
+		elem: $('#change-top-margin-dialog'),
+		init: function (event, ui) {
+			$(ui.target).closest('.bracket-header-super-container').addClass('change-top-margin-target');
+		},
+		options: {
+			title: 'Change top margin',
+			buttons: {
+				'OK' : function() {
+					var $topMarginElem = $('.bracket .change-top-margin-target').find('.bracket-header-top-margin'),
+					margin = $('#top-margin').val();
+					if (typeof margin !== 'undefined' && !isNaN(margin)) {
+						$topMarginElem.css('height', margin + 'px');
+					}
+					$(this).dialog('close');
+				},
+				'Cancel' : function() {
+					$(this).dialog('close');
+				}
+			},
+			open: function (event, ui) {
+				var $topMarginElem = $('.bracket .change-top-margin-target').find('.bracket-header-top-margin');
+				$('#top-margin').val(parseInt($topMarginElem.css('height')));
+			},
+			close: function (event, ui) {
+				$('.bracket .change-top-margin-target').removeClass('change-top-margin-target');
+			}
+		}
+	};
+	for (var i in bracketdesigner.dialog.dialogs) {
+		var dialog = bracketdesigner.dialog.dialogs[i],
+			options = { autoOpen: false, modal: true };
+		$.extend(options, dialog.options);
+		dialog.elem.dialog(options);
+	}
+
 	var insertStrings = {
 		'sectionHeader': '<div style="width:@widthpx;" class="bracket-section-header">A</div>',
 		'columnHeaderSection': '<div style="width:@widthpx;" class="bracket-column-header-section"></div>',
-		'section': '<div style="width:@widthpx;" class="bracket-section">&nbsp;</div>',
-		'columnHeader': '<div style="width:@widthpx;" class="bracket-column-header">1</div>',
-		'column': '<div style="width:@widthpx;" class="bracket-column bracket-@type-column">&nbsp;</div>',
+		'section': '<div style="width:@widthpx;" class="bracket-section"></div>',
+		'columnHeader': '<div style="width:@widthpx;" class="bracket-column-header bracket-@type-column-header">1</div>',
+		'column': '<div style="width:@widthpx;" class="bracket-column bracket-@type-column"></div>',
 		'game': '<div class="bracket-element bracket-game" id="bracket-game-">' +
 				'<div class="bracket-cell bracket-cell-r1" id="bracket-cell-">' +
 					'<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>' +
@@ -90,6 +194,10 @@ $(function() {
 	$('#bracket-show-cell-ids').click(function() {
 		$('.bracket').toggleClass('bracket-cell-ids-on', $(this).is(':checked'));
 	});
+	$('#bracket-show-column-overlays').click(function() {
+		$('.bracket').toggleClass('bracket-column-overlays-on', $(this).is(':checked'));
+		$('.bracket-column').sortable('option', 'disabled', $(this).is(':checked'));
+	});
 	$('.bracket')
 		.toggleClass('bracket-cell-helper-on', $('#bracket-show-cell-helper').is(':checked'))
 		.toggleClass('bracket-resizable-bottom-borders-on', $('#bracket-show-resizable-bottom-borders').is(':checked'))
@@ -155,6 +263,8 @@ $(function() {
 		var $connectorsUpDown,
 			columnType;
 
+		console.log('rCs', options);
+
 		if (options.type !== undefined) {
 		 	columnType = options.type;
 		} else if (options.sectionIndex !== undefined && options.columnIndex !== undefined) {
@@ -162,6 +272,8 @@ $(function() {
 				.find('.bracket-column').eq(options.columnIndex)
 				.data('columnType');
 		}
+
+		console.log('type:', columnType);
 
 		switch (columnType) {
 		case 'game':
@@ -260,70 +372,9 @@ $(function() {
 		connectToSortable: '.bracket-column',
 		zIndex: 95
 	});
-	$('.bracket-column').droppable();
-	$('.bracket-column').sortable({
-		placeholder: 'bracket-column-placeholder',
-		forcePlaceholderSize: true,
-		axis: 'y',
-		receive: function(event, ui) {
-			var $received = $(event.target).find('.ui-draggable'),
-				$newElement;
-			//console.log('Received the package!', event, ui);
-			switch ($(event.target).data('columnType')) {
-			case 'game':
-				if ($received.is('.bracket-toolbar-header')) {
-					$received.after('<div style="height:40px;margin-top:0px"><div class="bracket-header" id="Rx">Round x</div></div>');
-				} else if ($received.is('.bracket-toolbar-game')) {
-					$received.after(insertStrings.game);
-				} else if ($received.is('.bracket-toolbar-thirdplacematch')) {
-					$received.after(insertStrings.thirdplacematch);
-				}
-				break;
-			case 'connector':
-				if ($received.is('.bracket-toolbar-placeholder')) {
-					$received.after($('<div style="height:40px;" class="bracket-placeholder"></div>'));
-				} else if ($received.is('.bracket-toolbar-connector-up')) {
-					$received.after($('<div style="height: 26px;" class="bracket-connector bracket-connector-up">' +
-						'<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;">' +
-							'<div style="width:9px;height:8px"> </div>' +
-							'<div style="width:9px;height:16px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>' +
-						'</div>' +
-						'<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">' +
-							'<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>' +
-							'<div style="width:9px;height:18px;"> </div>' +
-						'</div>' +
-					'</div>'));
-				} else if ($received.is('.bracket-toolbar-connector-down')) {
-					$received.after($('<div style="height: 26px;" class="bracket-connector bracket-connector-down">' +
-						'<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px">' +
-							'<div style="width:9px;height:16px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>' +
-							'<div style="width:9px;height:8px"> </div>' +
-						'</div>' +
-						'<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">' +
-							'<div style="width:9px;height:18px;"> </div>' +
-							'<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>' +
-						'</div>' +
-					'</div>'));
-				} else if ($received.is('.bracket-toolbar-connector-drop')) {
-					$received.after($('<div style="height: 14px;" class="bracket-connector bracket-connector-drop">' +
-						'<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;height:100%;"> </div>' +
-						'<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;height:12px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>' +
-					'</div>'));
-				} else if ($received.is('.bracket-toolbar-connector-flat')) {
-					$received.after($('<div style="height: 0px;border-bottom:solid #aaa 2px;" class="bracket-connector bracket-connector-flat"> </div>'));
-				}
-			}
-			$received.remove();
-		},
-		over: function(event, ui) {
-			$(event.target).addClass('active');
-		},
-		out: function(event, ui) {
-			$(event.target).removeClass('active');
-		}
-	});
+	
 	var deleteElementWithDialog = function (event, ui) {
-		$(ui.target).closest('.active').addClass('delete-target');
+		$(this).addClass('delete-target');
 		$('#delete-element-dialog').dialog('open');
 	};
 	var addScoreColumn = function (event, ui) {
@@ -340,7 +391,8 @@ $(function() {
 		$('#game-height-dialog').dialog('open');		
 	};
 	var resizeClassic = function (event, ui) {
-		$(ui.target).closest('.active').addClass('resize-target');
+		console.log(this);
+		$(this).addClass('resize-target');
 		$('#simple-height-dialog').dialog('open');
 	};
 	var resizeColumnWithDialog = function (event, ui) {
@@ -360,15 +412,20 @@ $(function() {
 		$('#empty-column-dialog').dialog('open');
 	};
 	var setAsBreakColumn = function(event, ui) {
-		var columnIndex = $(ui.target).index(),
-			sectionIndex = $(ui.target).parent().index('.bracket-section');
+		var $columnHeader = $(ui.target).closest('.bracket-column-header'),
+			columnIndex = $columnHeader.index(),
+			sectionIndex = $columnHeader.closest('.bracket-column-header-section').index('.bracket-column-header-section');
+		console.log("setAsBreakColumn", $(ui.target), sectionIndex, columnIndex);
 
+		removeBreakColumn(sectionIndex);
+		$('.bracket-section').eq(sectionIndex).find('.bracket-column').eq(columnIndex).addClass('bracket-column-break');
+		$columnHeader.addClass('bracket-column-header-break');
+		updateSectionsWidth();
+	};
+	var removeBreakColumn = function(sectionIndex) {
 		$('.bracket-section').eq(sectionIndex).find('.bracket-column-break').removeClass('bracket-column-break');
 		$('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header-break').removeClass('bracket-column-header-break');
-		$('.bracket-section').eq(sectionIndex).find('.bracket-column').eq(columnIndex).addClass('bracket-column-break');
-		$(ui.target).addClass('bracket-column-header-break');
-		updateSectionsWidth();
-	}
+	};
 	var insertSectionBefore = function (event, ui) {
 		insertSection($(ui.target).index(), 'before');
 	};
@@ -377,53 +434,99 @@ $(function() {
 	};
 	var insertSection = function (index, side) {
 		var width = 170;
-		$.fn[side].apply($('.bracket-column-header-section').eq(index),
-			[insertStrings.columnHeaderSection.replace('@width', width)]);
-		$.fn[side].apply($('.bracket-section-header').eq(index),
-			[insertStrings.sectionHeader.replace('@width', width)]);
-		$.fn[side].apply($('.bracket-section').eq(index),
-			[insertStrings.section.replace('@width', width)]);
+		$.fn[side].call($('.bracket-column-header-section').eq(index),
+			insertStrings.columnHeaderSection.replace('@width', width));
+		$.fn[side].call($('.bracket-section-header').eq(index),
+			insertStrings.sectionHeader.replace('@width', width));
+		$.fn[side].call($('.bracket-section').eq(index),
+			insertStrings.section.replace('@width', width));
 		numberSectionHeaders();
 	};
-	var insertGameColumnBefore = function (event, ui) {
-		insertColumn($(ui.target).closest('.bracket-column-header-section').index(), $(ui.target).index(), 'game', 'before');
-	};
-	var insertGameColumnAfter = function (event, ui) {
-		insertColumn($(ui.target).closest('.bracket-column-header-section').index(), $(ui.target).index(), 'game', 'after');
-	};
-	var insertConnectorColumnBefore = function (event, ui) {
-		insertColumn($(ui.target).closest('.bracket-column-header-section').index(), $(ui.target).index(), 'connector', 'before');
-	};
-	var insertConnectorColumnAfter = function (event, ui) {
-		insertColumn($(ui.target).closest('.bracket-column-header-section').index(), $(ui.target).index(), 'connector', 'after');
-	};
-	var insertColumn = function (sectionIndex, columnIndex, type, side) {
-		var width;
-		switch (type) {
-		case 'connector':
-			width = 20;
-			break;
-		case 'game':
-		default:
-			width = 170;
-		}
-		$.fn[side].apply($('.bracket-column-header-section').eq(sectionIndex).find('.bracket-column-header').eq(columnIndex),
-			[insertStrings.columnHeader
-				.replace('@width', width)
-				.replace('@type', type)]);
-		$.fn[side].apply($('.bracket-section').eq(sectionIndex).find('.bracket-column').eq(columnIndex),
-			[insertStrings.column
-				.replace('@width', width)
-				.replace('@type', type)]);
-		numberColumnHeaders();
-	};
-	$('.bracket-column').livequery(function () {
+
+	var liveColumn = function () {
 		if ($(this).is('.bracket-game-column')) {
 			$(this).data('columnType', 'game');
 		} else if ($(this).is('.bracket-connector-column')) {
 			$(this).data('columnType', 'connector');
 		}
-	});
+		$(this).append($('<div>')
+				.addClass('column-overlay')
+				.html($('<div>')
+					.addClass('column-number-container')
+					.html($('<div>').addClass('column-number'))
+				)
+			);
+		$(this).droppable();
+		$(this).sortable({
+			placeholder: 'bracket-column-placeholder',
+			cancel: '.column-overlay',
+			forcePlaceholderSize: true,
+			axis: 'y',
+			receive: function(event, ui) {
+				var $received = $(event.target).find('.ui-draggable'),
+					$newElement;
+				//console.log('Received the package!', event, ui);
+				switch ($(event.target).data('columnType')) {
+				case 'game':
+					if ($received.is('.bracket-toolbar-header')) {
+						$received.after('<div class="bracket-header-super-container">' +
+							'<div class="bracket-header-top-margin" style="height:16px;"> </div>' + 
+							'<div class="bracket-header-container" style="height:40px;">' +
+								'<div class="bracket-header" id="Rx"><input type="text" value="Round x"/></div>' +
+							'</div>' +
+						'<div>');
+					} else if ($received.is('.bracket-toolbar-game')) {
+						$received.after(insertStrings.game);
+					} else if ($received.is('.bracket-toolbar-thirdplacematch')) {
+						$received.after(insertStrings.thirdplacematch);
+					}
+					break;
+				case 'connector':
+					if ($received.is('.bracket-toolbar-placeholder')) {
+						$received.after($('<div style="height:40px;" class="bracket-placeholder"></div>'));
+					} else if ($received.is('.bracket-toolbar-connector-up')) {
+						$received.after($('<div style="height: 26px;" class="bracket-connector bracket-connector-up">' +
+							'<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;">' +
+								'<div style="width:9px;height:8px"> </div>' +
+								'<div style="width:9px;height:16px;border-bottom-right-radius:3px;border:solid #aaa;border-width:0 2px 2px 0"> </div>' +
+							'</div>' +
+							'<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">' +
+								'<div style="width:9px;height:6px;border-top-left-radius:3px;border:solid #aaa;border-width:2px 0 0 2px"> </div>' +
+								'<div style="width:9px;height:18px;"> </div>' +
+							'</div>' +
+						'</div>'));
+					} else if ($received.is('.bracket-toolbar-connector-down')) {
+						$received.after($('<div style="height: 26px;" class="bracket-connector bracket-connector-down">' +
+							'<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px">' +
+								'<div style="width:9px;height:16px;border-top-right-radius:3px;border:solid #aaa;border-width:2px 2px 0 0"> </div>' +
+								'<div style="width:9px;height:8px"> </div>' +
+							'</div>' +
+							'<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;">' +
+								'<div style="width:9px;height:18px;"> </div>' +
+								'<div style="width:9px;height:6px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>' +
+							'</div>' +
+						'</div>'));
+					} else if ($received.is('.bracket-toolbar-connector-drop')) {
+						$received.after($('<div style="height: 14px;" class="bracket-connector bracket-connector-drop">' +
+							'<div class="bracket-connector-part bracket-connector-left" style="float: left; clear: left; width:9px;height:100%;"> </div>' +
+							'<div class="bracket-connector-part bracket-connector-right" style="float: left; width:9px;height:12px;border-bottom-left-radius:3px;border:solid #aaa;border-width:0 0 2px 2px"> </div>' +
+						'</div>'));
+					} else if ($received.is('.bracket-toolbar-connector-flat')) {
+						$received.after($('<div style="height: 0px;border-bottom:solid #aaa 2px;" class="bracket-connector bracket-connector-flat"> </div>'));
+					}
+				}
+				$received.remove();
+			},
+			over: function(event, ui) {
+				$(event.target).addClass('active');
+			},
+			out: function(event, ui) {
+				$(event.target).removeClass('active');
+			}
+		});
+		$(this).sortable('option', 'disabled', $('#bracket-show-column-overlays').is(':checked'));
+	};
+	$('.bracket-column').each(liveColumn);
 	$('.bracket-connector').livequery(function () {
 		if ($(this).is('.bracket-connector-up')) {
 			$(this).data('connectorType', 'up');
@@ -443,8 +546,8 @@ $(function() {
 					{title: 'Insert a section before', action: insertSectionBefore},
 					{title: 'Insert a section after', action: insertSectionAfter},
 					{title: 'Empty section', action: emptySectionWithDialog},
-					{title: 'Delete section', uiIcon: 'ui-icon-trash', action: deleteElementWithDialog},
-					{title: 'Resize section...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: resizeSectionWithDialog}
+					{title: 'Delete section', uiIcon: 'ui-icon-trash', action: $.proxy(deleteElementWithDialog, this)},
+					{title: 'Resize section...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: $.proxy(resizeSectionWithDialog, this)}
 				]
 			})
 			/*.resizable({
@@ -470,6 +573,7 @@ $(function() {
 						newColumnIndex = ui.item.index(),
 						$bracketSection = $('.bracket-section').eq(ui.item.parent().index()),
 						$bracketColumn = $bracketSection.find('.bracket-column').eq(oldColumnIndex);
+					console.log("bchs-s", ui.item, oldColumnIndex, newColumnIndex);
 					if (oldColumnIndex == newColumnIndex) {
 						return true;
 					}
@@ -479,13 +583,13 @@ $(function() {
 					} else {
 						$bracketSection.find('.bracket-column').eq(newColumnIndex).before($bracketColumn);				
 					}
-					numberColumnHeaders();
+					numberColumns();
 					updateSectionsWidth();
 				}
 			});
 		//$(this).sortable('disable');
 	});
-	$('.bracket-column-header').livequery(function () {
+	var liveColumnHeader = function () {
 		var minWidth, maxWidth;
 		if ($(this).is('.bracket-game-column-header')) {
 			minWidth = 100;
@@ -498,17 +602,17 @@ $(function() {
 			maxWidth = 100;
 		}
 		$(this)
-			.html($('<div>'))
+			.html($('<div>').addClass('column-number'))
 			.contextmenu({
 				show: false,
 				menu: [
-					{title: 'Insert a game column before', action: insertGameColumnBefore},
-					{title: 'Insert a game column after', action: insertGameColumnAfter},
-					{title: 'Insert a connector column before', action: insertConnectorColumnBefore},
-					{title: 'Insert a connector column after', action: insertConnectorColumnAfter},
+					{title: 'Insert a game column before', action: bracketdesigner.fn.insertGameColumnBefore},
+					{title: 'Insert a game column after', action: bracketdesigner.fn.insertGameColumnAfter},
+					{title: 'Insert a connector column before', action: bracketdesigner.fn.insertConnectorColumnBefore},
+					{title: 'Insert a connector column after', action: bracketdesigner.fn.insertConnectorColumnAfter},
 					{title: 'Empty column', action: emptyColumnWithDialog},
 					{title: 'Set column as break', action: setAsBreakColumn},
-					{title: 'Delete column', uiIcon: 'ui-icon-trash', action: deleteElementWithDialog},
+					{title: 'Delete column', uiIcon: 'ui-icon-trash', action: $.proxy(deleteElementWithDialog, this)},
 					//{title: 'Resize column...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: resizeColumnWithDialog}
 				]
 			})
@@ -519,7 +623,7 @@ $(function() {
 				maxWidth: maxWidth,
 				resize: function (event, ui) {
 					var columnIndex = $(this).index(),
-						sectionIndex = $(this).parent().index('.bracket-section');
+						sectionIndex = $(this).parent().index('.bracket-column-header-section');
 					ui.size.width = Math.round(ui.size.width*.5) * 2;
 					//resizeColumn(sectionIndex, columnIndex, ui.size.width);
 					resizeColumns({'sectionIndex': sectionIndex, 'columnIndex': columnIndex}, ui.size.width);
@@ -529,7 +633,9 @@ $(function() {
 				$('.bracket-column-header.selected').removeClass('selected');
 				$(this).addClass('selected');
 			});
-	});
+		console.log('live bracket-column-header');
+	};
+	$('.bracket-column-header').each(liveColumnHeader);
 	$('.bracket-game').livequery(function () {
 		var gameIdRegExp = /bracket-game-([\w]*)/,
 			cellIdRegExp = /bracket-cell-([\w]*)/,
@@ -554,7 +660,7 @@ $(function() {
 				show: false,
 				menu: [
 					{title: 'Add score column', action: addScoreColumn},
-					{title: 'Delete game', uiIcon: 'ui-icon-trash', action: deleteElementWithDialog},
+					{title: 'Delete game', uiIcon: 'ui-icon-trash', action: $.proxy(deleteElementWithDialog, this)},
 					{title: 'Resize game...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: resizeGame}
 				]
 			})
@@ -586,15 +692,18 @@ $(function() {
 		$(this).data('gameId', gameId);
 		$(this).data('cellId', cellId);
 	});
-	$('.bracket-header-container').livequery(function () {
+	$('.bracket-header-super-container').livequery(function () {
+		var proxyContext = $(this).find('.bracket-header-container');
 		$(this)
 			.contextmenu({
 				show: false,
 				menu: [
-					{title: 'Delete header', uiIcon: 'ui-icon-trash', action: deleteElementWithDialog},
-					{title: 'Resize header...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: resizeClassic}
+					{title: 'Delete header', uiIcon: 'ui-icon-trash', action: $.proxy(deleteElementWithDialog, this)},
+					{title: 'Resize header...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: $.proxy(resizeClassic, proxyContext) },
+					{title: 'Change top margin...', uiIcon: 'ui-icon-arrowthick-1-n', cmd: 'changeTopMargin', action: bracketdesigner.dialog.handleCmd}
 				]
-			})
+			});
+		$(this).find('.bracket-header-container')
 			.resizable({
 				handles: 's',
 				containment: ".bracket-column"
@@ -605,8 +714,8 @@ $(function() {
 			.contextmenu({
 				show: false,
 				menu: [
-					{title: 'Delete placeholder', uiIcon: 'ui-icon-trash', action: deleteElementWithDialog},
-					{title: 'Resize placeholder...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: resizeClassic}
+					{title: 'Delete placeholder', uiIcon: 'ui-icon-trash', action: $.proxy(deleteElementWithDialog, this)},
+					{title: 'Resize placeholder...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: $.proxy(resizeClassic, this)}
 				]
 			})
 			.resizable({
@@ -615,12 +724,13 @@ $(function() {
 			});
 	});
 	$('.bracket-connector:not(.bracket-connector-flat)').livequery(function () {
+		var resizeProxy = this;
 		$(this)
 			.contextmenu({
 				show: false,
 				menu: [
-					{title: 'Delete connector', uiIcon: 'ui-icon-trash', action: deleteElementWithDialog},
-					{title: 'Resize connector...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: resizeClassic}
+					{title: 'Delete connector', uiIcon: 'ui-icon-trash', action: $.proxy(deleteElementWithDialog, this)},
+					{title: 'Resize connector...', uiIcon: 'ui-icon-arrowthick-2-n-s', action: $.proxy(resizeClassic, this)}
 				]
 			})
 			.resizable({
@@ -631,7 +741,7 @@ $(function() {
 				}
 			});
 	});
-	$('.bracket-section-header, .bracket-column-header, .bracket-game, .bracket-header-container, .bracket-placeholder, .bracket-connector').livequery(function () {
+	$('.bracket-section-header, .bracket-column-header, .bracket-game, .bracket-header-super-container, .bracket-placeholder, .bracket-connector').livequery(function () {
 		$(this)
 			.bind('contextmenubeforeopen', function (event, ui) {
 				if (event.ctrlKey) {
@@ -645,6 +755,7 @@ $(function() {
 				$(this).removeClass('active');
 			});
 	});
+
 	$( "#section-width-dialog" ).dialog({
 		autoOpen: false,
 		modal: true,
@@ -653,7 +764,7 @@ $(function() {
 			'OK' : function() {
 				var $target = $('.bracket .resize-target'),
 					width = $('#section-width').val(),
-					sectionIndex = $target.index('.bracket-section');
+					sectionIndex = $target.index('.bracket-column-header-section');
 
 				if (typeof width !== 'undefined' && !isNaN(width)) {
 					$target.css('width', width + 'px');
@@ -682,7 +793,7 @@ $(function() {
 				var $target = $('.bracket .resize-target'),
 					width = $('#column-width').val(),
 					columnIndex = $target.index();
-					sectionIndex = $target.parent().index('.bracket-section');
+					sectionIndex = $target.parent().index('.bracket-column-header-section');
 
 				if (typeof width !== 'undefined' && !isNaN(width)) {
 					$target.css('width', width + 'px');
@@ -773,10 +884,15 @@ $(function() {
 			$(this).text(String.fromCharCode('A'.charCodeAt(0) + index));
 		});
 	};
-	var numberColumnHeaders = function () {
+	var numberColumns = function () {
 		$('.bracket-column-header-section').each(function (sectionIndex) {
 			$(this).find('.bracket-column-header').each(function (index) {
-				$(this).find('div').text(index + 1);
+				$(this).find('.column-number').text(index + 1);
+			});
+		});
+		$('.bracket-section').each(function (sectionIndex) {
+			$(this).find('.bracket-column').each(function (index) {
+				$(this).find('.column-number').text(index + 1);
 			});
 		});
 	};
@@ -795,7 +911,7 @@ $(function() {
 				}
 				$target.detach();
 				if ($target.is('.bracket-column-header')) {
-					numberColumnHeaders();
+					numberColumns();
 				} else if ($target.is('.bracket-section-header')) {
 					numberSectionHeaders();
 				}
@@ -821,7 +937,7 @@ $(function() {
 				var $target = $('.bracket .empty-target');
 				
 				$('.bracket-column-header-section').eq($target.index()).empty();
-				$('.bracket-section').eq($target.index()).html('&nbsp;');				
+				$('.bracket-section').eq($target.index()).html('');				
 				
 				$(this).dialog('close');
 			},
@@ -844,7 +960,7 @@ $(function() {
 			'OK' : function() {
 				var $target = $('.bracket .empty-target');
 
-				$('.bracket-column').eq($target.index()).html('&nbsp;');				
+				$('.bracket-column').eq($target.index()).html('');				
 				
 				$(this).dialog('close');
 			},
@@ -960,12 +1076,14 @@ $(function() {
 				case 'game':
 					columnWidth = bracketWidths.gameColumn;
 					$(this).children().each(function (elementIndex) {
-						if ($(this).is('.bracket-header-container')) {
-							var $bracketHeader = $(this).find('.bracket-header');
+						if ($(this).is('.bracket-header-super-container')) {
+							var $bracketContainer = $(this).find('.bracket-header-container'),
+								$bracketTopMargin = $(this).find('.bracket-header-top-margin'),
+								$bracketHeader = $bracketContainer.find('.bracket-header');
 
 							columnInnerWikitext += identedText(htmlStrings.bracketHeader
-									.replace('@height', $(this).css('height'))
-									.replace('@marginTop', $(this).css('margin-top'))
+									.replace('@height', $bracketContainer.css('height'))
+									.replace('@marginTop', $bracketTopMargin.css('height'))
 									.replace('@roundId', $bracketHeader.attr('id'))
 									.replace('@roundTitle', $bracketHeader.find('input').val())
 								);
@@ -1175,5 +1293,5 @@ $(function() {
 		}
 	});
 
-	numberColumnHeaders();
+	numberColumns();
 });

@@ -147,7 +147,7 @@ h1 {
 	background: #cecece;
 }
 .bracket-column-header-row {
-	background: #eeeeee;
+	background: #d8d8d8;
 }
 .bracket-section-header,
 .bracket-column-header {
@@ -190,10 +190,49 @@ h1 {
 .bracket-section {
 	float: left;
 	position: relative;
+	min-height: 20px;
+	background-image: linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0),
+		linear-gradient(-45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0);
+	background-size: 8px 8px;
 }
 .bracket-column {
+	position: relative;
 	height: 100%;
+	min-height: 20px;
+	background: white;
 	/*border-right: 1px dotted #d8d8d8;*/
+}
+.bracket-column-break + .bracket-column {
+	clear: left;
+}
+.bracket-column-overlays-on .bracket-column .column-overlay {
+	display: block;
+}
+.bracket-column .column-overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: radial-gradient(transparent, rgba(0, 0, 0, .3));
+}
+.bracket-column .column-overlay .column-number-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+.bracket-column .column-overlay .column-number {
+	position: relative;
+	top: -50%;
+	left: -50%;
+	color: #000000;
+	font-weight: bold;
+	font-size: 1.5em;
+	text-shadow: -1px -1px 0 #f0f0f0,
+		1px -1px 0 #f0f0f0,
+		-1px 1px 0 #f0f0f0,
+		1px 1px 0 #f0f0f0;
 }
 .bracket-column.bracket-game-column {
 	width: 150px;
@@ -207,9 +246,13 @@ h1 {
 	border-color: #cfcf70;
 	height: 50px;
 }
+.bracket-header-top-margin {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;	
+}
 .bracket-header-container {
 	width: 100%!important;
-	background: white;
+	/*background: white;*/
 }
 .bracket-header {
 	padding: 0 15px;
@@ -267,7 +310,7 @@ input.bracket-cell-id {
 	text-align: center;
 }
 .bracket-game.active,
-.bracket-header-container.active,
+.bracket-header-super-container.active,
 .bracket-placeholder.active,
 .bracket-connector.active {
 	background: #ffff80;

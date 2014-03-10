@@ -32,62 +32,57 @@
 	</div>
 
 	<div id="section-width-dialog">
-		<form>
-			<label for="section-width">Enter the width in pixels (even number).</label><br/>
-			<input type="text" id="section-width"/>
-		</form>
+		<label for="section-width">Enter the width in pixels (even number).</label><br/>
+		<input type="text" id="section-width"/>
 	</div>
 
 	<div id="column-width-dialog">
-		<form>
-			<label for="column-width">Enter the width in pixels (even number).</label><br/>
-			<input type="text" id="column-width"/>
-		</form>
+		<label for="column-width">Enter the width in pixels (even number).</label><br/>
+		<input type="text" id="column-width"/>
 	</div>
 
 	<div id="simple-height-dialog">
-		<form>
-			<label for="simple-height">Enter the height in pixels.</label><br/>
-			<input type="text" id="simple-height"/>
-		</form>
+		<label for="simple-height">Enter the height in pixels.</label><br/>
+		<input type="text" id="simple-height"/>
 	</div>
 
 	<div id="game-height-dialog">
 		<p>Select the sizes of the top and bottom cell.<p>
-		<form>
-			<label for="game-top-height">Size of the top cell: </label>
-			<select id="game-top-height">
-				<option value="bracket-cell-r1">1</option>
-				<option value="bracket-cell-r2">2</option>
-				<option value="bracket-cell-r3">3</option>
-				<option value="bracket-cell-r4">4</option>
-				<option value="bracket-cell-r5">5</option>
-				<option value="bracket-cell-r6">6</option>
-				<option value="bracket-cell-r7">7</option>
-			</select><br/>
-			<label for="game-top-height">Size of the bottom cell: </label>
-			<select id="game-bottom-height">
-				<option value="bracket-cell-r1">1</option>
-				<option value="bracket-cell-r2">2</option>
-				<option value="bracket-cell-r3">3</option>
-				<option value="bracket-cell-r4">4</option>
-				<option value="bracket-cell-r5">5</option>
-				<option value="bracket-cell-r6">6</option>
-				<option value="bracket-cell-r7">7</option>
-			</select>
-		</form>
+		<label for="game-top-height">Size of the top cell: </label>
+		<select id="game-top-height">
+			<option value="bracket-cell-r1">1</option>
+			<option value="bracket-cell-r2">2</option>
+			<option value="bracket-cell-r3">3</option>
+			<option value="bracket-cell-r4">4</option>
+			<option value="bracket-cell-r5">5</option>
+			<option value="bracket-cell-r6">6</option>
+			<option value="bracket-cell-r7">7</option>
+		</select><br/>
+		<label for="game-top-height">Size of the bottom cell: </label>
+		<select id="game-bottom-height">
+			<option value="bracket-cell-r1">1</option>
+			<option value="bracket-cell-r2">2</option>
+			<option value="bracket-cell-r3">3</option>
+			<option value="bracket-cell-r4">4</option>
+			<option value="bracket-cell-r5">5</option>
+			<option value="bracket-cell-r6">6</option>
+			<option value="bracket-cell-r7">7</option>
+		</select>
 	</div>
 
 	<div id="generated-wikitext-dialog">
 		<p>Here is the resulting wikitext:</p>
-		<form>
-			<textarea rows=15 id="generated-wikitext"></textarea>
-		</form>
+		<textarea rows=15 id="generated-wikitext"></textarea>
 	</div>
 
 	<div id="game-cell-ids-dialog">
 		<ul>
 		</ul>
+	</div>
+
+	<div id="change-top-margin-dialog">
+		<label for="top-margin">Enter the top margin in pixels.</label><br/>
+		<input type="text" id="top-margin"/>
 	</div>
 
 	<div class="bracket-options">
@@ -104,6 +99,9 @@
 			<br/>
 			<input type="checkbox" id="bracket-show-cell-ids"/>
 			<label for="bracket-show-cell-ids">Show cell IDs</label>
+			<br/>
+			<input type="checkbox" id="bracket-show-column-overlays"/>
+			<label for="bracket-show-column-overlays">Show column overlays</label>
 		</div>
 		<div class="bracket-options-box">
 			<div class="bracket-options-box-title">Widths</div>
@@ -160,7 +158,10 @@
 			</table>
 			<div style="width:360px;" class="bracket-section">
 				<div style="width: 170px;" class="bracket-column bracket-game-column">
-					<div class="bracket-header-container" style="height:40px;margin-top:0px"><div class="bracket-header" id="R1"><input type="text" value="Semifinals"/></div></div>
+					<div class="bracket-header-super-container">
+						<div class="bracket-header-top-margin" style="height:0px;"> </div>
+						<div class="bracket-header-container" style="height:40px;"><div class="bracket-header" id="R1"><input type="text" value="Semifinals"/></div></div>
+					</div>
 					<div class="bracket-element bracket-game" id="bracket-game-R1G1">
 						<div class="bracket-cell bracket-cell-r1" id="bracket-cell-R1D1">
 							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
@@ -204,7 +205,10 @@
 					<div style="height:35px;" class="bracket-placeholder"></div>
 				</div>
 				<div style="width: 170px;" class="bracket-column bracket-game-column bracket-column-break">
-					<div class="bracket-header-container" style="height:40px;margin-top:0px"><div class="bracket-header" id="R2"><input type="text" value="Finals"/></div></div>
+					<div class="bracket-header-super-container">
+						<div class="bracket-header-top-margin" style="height:0px;"> </div>
+						<div class="bracket-header-container" style="height:40px;"><div class="bracket-header" id="R2"><input type="text" value="Finals"/></div></div>
+					</div>
 					<div class="bracket-element bracket-game" id="bracket-game-R2G1">
 						<div class="bracket-cell bracket-cell-r2" id="bracket-cell-R2W1">
 							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
@@ -215,7 +219,10 @@
 					</div>
 				</div>
 				<div style="width: 170px;" class="bracket-column bracket-game-column">
-					<div class="bracket-header-container" style="height:64px;margin-top:16px"><div class="bracket-header" id="L1"><input type="text" value="Loser's Round 1"/></div></div>
+					<div class="bracket-header-super-container">
+						<div class="bracket-header-top-margin" style="height:16px;"> </div>
+						<div class="bracket-header-container" style="height:64px;"><div class="bracket-header" id="L1"><input type="text" value="Loser's Round 1"/></div></div>
+					</div>
 					<div class="bracket-element bracket-game" id="bracket-game-R1G3">
 						<div class="bracket-cell bracket-cell-r1" id="bracket-cell-R1D5">
 							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
@@ -236,7 +243,10 @@
 					<div style="height: 35px;" class="bracket-placeholder"></div>
 				</div>
 				<div style="width: 170px;" class="bracket-column bracket-game-column">
-					<div class="bracket-header-container" style="height:52px;margin-top:16px"><div class="bracket-header" id="L2"><input type="text" value="Loser's Finals"/></div></div>
+					<div class="bracket-header-super-container">
+						<div class="bracket-header-top-margin" style="height:16px;"> </div>
+						<div class="bracket-header-container" style="height:52px;"><div class="bracket-header" id="L2"><input type="text" value="Loser's Finals"/></div></div>
+					</div>
 					<div class="bracket-element bracket-game" id="bracket-game-R2G2">
 						<div class="bracket-cell bracket-cell-r1" id="bracket-cell-R2D1">
 							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
@@ -274,7 +284,10 @@
 					<div style="height:35px;" class="bracket-placeholder"></div>
 				</div>
 				<div style="width: 170px;" class="bracket-column bracket-game-column">
-					<div class="bracket-header-container" style="height:164px;margin-top:0px"><div class="bracket-header" id="R3"><input type="text" value="Grand Finals"/></div></div>
+					<div class="bracket-header-super-container">
+						<div class="bracket-header-top-margin" style="height:0px;"> </div>
+						<div class="bracket-header-container" style="height:164px;"><div class="bracket-header" id="R3"><input type="text" value="Grand Finals"/></div></div>
+					</div>
 					<div class="bracket-element bracket-game" id="bracket-game-R3G1">
 						<div class="bracket-cell bracket-cell-r1" id="bracket-cell-R3W1">
 							<div class="bracket-player-top"><div class="bracket-score" style="width:21px"> </div></div>
